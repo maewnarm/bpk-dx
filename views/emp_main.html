@@ -1,0 +1,128 @@
+<!DOCTYPE HTML>
+<html>
+<header>
+    <title>BPK-DX - Employee</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma-rtl.min.css">
+    <script>
+        var selected = []
+        function selectId(id) {
+            const val = document.getElementById("ch-" + id).checked
+            console.log(id)
+            const i = selected.indexOf(id)
+            console.log(val)
+            if (val && i == -1) {
+                selected.push(id)
+            } else if (!val && i != -1) {
+                selected.splice(i, 1)
+            }
+            console.log(selected)
+            document.getElementById("selectedID").value = selected.join("|")
+            console.log(document.getElementById("selectedID").value)
+        }
+
+        function deleteID(form) {
+            selected = document.getElementById("selectedID").value
+            document.getElementById("formButton").action = "/employee/delete?id=" + selected
+            document.getElementById("formButton").submit()
+            //location.href = "/employee/select?id=" + selected
+        }
+    </script>
+    <style>
+        body {
+            margin: 20px 20px;
+        }
+
+        .head {
+            display: flex;
+            text-align: left;
+            width: 100%;
+            background-color: rgb(35, 38, 82);
+            border-radius: 8px;
+        }
+
+        .head div {
+            width: 100%;
+        }
+
+        .head div h1 {
+            text-align: center;
+        }
+
+        .head div h3,
+        h4 {
+            margin: 2px 5px;
+        }
+
+        img {
+            border: 1px solid black;
+            border-radius: 5px;
+            margin: 5px;
+        }
+    </style>
+</header>
+
+<body>
+    <table class="table">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Employee ID</th>
+                <th>Surname</th>
+                <th>Lastname</th>
+                <th>Department</th>
+                <th>Section</th>
+                <th>Section Code</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{$s := .Select}}
+            {{range $e := .Emp_list}}
+            {{if (eq $s $e.Id)}}
+            <tr class="is-selected">
+                {{else}}
+            <tr>
+                {{end}}
+                <td>
+                    <label class="checkbox">
+                        <input type="checkbox" onchange="selectId('{{$e.Id}}')" id="ch-{{$e.Id}}">
+                    </label>
+                </td>
+                <td>{{$e.Id}}</td>
+                <td>{{$e.Surname}}</td>
+                <td>{{$e.Lastname}}</td>
+                <td>{{$e.Department}}</td>
+                <td>{{$e.Section_name}}</td>
+                <td>{{$e.Section_code}}</td>
+            </tr>
+            {{end}}
+            {{range $d := .Delete_list}}
+            <tr>
+                <td>Deleted</td>
+                <td>{{$d.Id}}</td>
+                <td>{{$d.Surname}}</td>
+                <td>{{$d.Lastname}}</td>
+                <td>{{$d.Department}}</td>
+                <td>{{$d.Section_name}}</td>
+                <td>{{$d.Section_code}}</td>
+            </tr>
+            {{end}}
+        </tbody>
+    </table>
+    <p name="selectedID" id="selectedID"></p>
+    <form id="formButton" action="" method="POST">
+        <a class="button is-primary" href="/employee/add">Add new employee</a>
+        <a class="button is-danger" onclick="deleteID(this.form)">Delete</a>
+    </form>
+</body>
+
+<script>
+    console.log("run here")
+    var inputs = document.getElementsByTagName('input')
+    for (var i = 0; i < inputs.length; i++) {
+        if (inputs[i].type == 'checkbox') {
+            inputs[i].checked = false
+        }
+    }
+</script>
+
+</html>

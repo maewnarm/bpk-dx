@@ -2,6 +2,7 @@
 <html>
 <header>
     <title>BPK-DX - Employee</title>
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma-rtl.min.css">
     <script>
         var selected = []
@@ -32,31 +33,8 @@
             margin: 20px 20px;
         }
 
-        .head {
-            display: flex;
-            text-align: left;
-            width: 100%;
-            background-color: rgb(35, 38, 82);
-            border-radius: 8px;
-        }
-
-        .head div {
-            width: 100%;
-        }
-
-        .head div h1 {
-            text-align: center;
-        }
-
-        .head div h3,
-        h4 {
-            margin: 2px 5px;
-        }
-
-        img {
-            border: 1px solid black;
-            border-radius: 5px;
-            margin: 5px;
+        .edit-btn:hover {
+            background-color: lightgrey;
         }
     </style>
 </header>
@@ -65,6 +43,7 @@
     <table class="table">
         <thead>
             <tr>
+                <th></th>
                 <th></th>
                 <th>Employee ID</th>
                 <th>Surname</th>
@@ -75,19 +54,28 @@
             </tr>
         </thead>
         <tbody>
-            {{$s := .Select}}
+            {{$s := .New}}
             {{range $e := .Emp_list}}
-            {{if (eq $s $e.Id)}}
-            <tr class="is-selected">
-                {{else}}
             <tr>
-                {{end}}
+                <td>
+                    <span class="icon is-left edit-btn">
+                        <abbr title="Edit"><i class="fas fa-edit "></i></abbr>
+                    </span>
+                </td>
                 <td>
                     <label class="checkbox">
                         <input type="checkbox" onchange="selectId('{{$e.Id}}')" id="ch-{{$e.Id}}">
                     </label>
                 </td>
-                <td>{{$e.Id}}</td>
+                <td>
+                    {{$e.Id}}
+                    {{if (eq $s $e.Id)}}
+                    <svg viewBox="0 0 100 100" height="19px">
+                        <path stroke="lightgreen" stroke-width="15px" stroke-linecap="round"
+                        d="M 90 50 L 25 50 M 25 30 L 70 10 M 25 70 L 70 90" />
+                    </svg>
+                    {{end}}
+                </td>
                 <td>{{$e.Surname}}</td>
                 <td>{{$e.Lastname}}</td>
                 <td>{{$e.Department}}</td>
@@ -98,6 +86,7 @@
             {{range $d := .Delete_list}}
             <tr>
                 <td>Deleted</td>
+                <td></td>
                 <td>{{$d.Id}}</td>
                 <td>{{$d.Surname}}</td>
                 <td>{{$d.Lastname}}</td>
@@ -112,6 +101,7 @@
     <form id="formButton" action="" method="POST">
         <a class="button is-primary" href="/employee/add">Add new employee</a>
         <a class="button is-danger" onclick="deleteID(this.form)">Delete</a>
+        <a class="button is-warning" href="/">Back</a>
     </form>
 </body>
 

@@ -13,7 +13,7 @@ func makeRouter() http.Handler {
 	r.Use(middleware.Logger)
 
 	r.Get("/", controllers.Home{}.HomeMain)
-	r.Get("/employee/", controllers.Emp{}.EmpMain)
+	r.Get("/employee", controllers.Emp{}.EmpMain)
 	r.Get("/employee/add", controllers.Emp{}.EmpAdd)
 	r.Post("/employee/add", controllers.Emp{}.EmpCreate)
 

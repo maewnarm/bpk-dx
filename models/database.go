@@ -7,7 +7,7 @@ import (
 	_ "github.com/lib/pq"
 )
 
-// create file .go and write below code
+// create file dblogin.go and write below code
 
 // package models
 

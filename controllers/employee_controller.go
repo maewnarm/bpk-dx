@@ -17,10 +17,10 @@ func (e Emp) EmpMain(resp http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	sel := r.URL.Query().Get("sel")
+	new := r.URL.Query().Get("new")
 
 	viewData := &views.EmpMainIndexView{
-		Select:      sel,
+		New:         new,
 		Emp_list:    emps,
 		ShowDelete:  false,
 		Delete_list: []*models.Employee{},
@@ -48,7 +48,7 @@ func (e Emp) EmpCreate(resp http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Fprintln(resp, "EmpCreate error", err)
 	} else {
-		http.Redirect(resp, r, "/employee/?sel="+emp.Id, http.StatusFound)
+		http.Redirect(resp, r, "/employee/?new="+emp.Id, http.StatusFound)
 	}
 }
 
@@ -66,7 +66,7 @@ func (e Emp) DeleteEmployee(resp http.ResponseWriter, r *http.Request) {
 	}
 
 	viewData := &views.EmpMainIndexView{
-		Select:      "",
+		New:         "",
 		Emp_list:    emps,
 		ShowDelete:  true,
 		Delete_list: del,

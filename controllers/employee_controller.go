@@ -48,7 +48,7 @@ func (e Emp) EmpCreate(resp http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Fprintln(resp, "EmpCreate error", err)
 	} else {
-		http.Redirect(resp, r, "/employee/?new="+emp.Id, http.StatusFound)
+		http.Redirect(resp, r, "/employee?new="+emp.Id, http.StatusFound)
 	}
 }
 

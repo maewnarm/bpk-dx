@@ -18,6 +18,7 @@ import (
 // )
 
 func connect() (*sqlx.DB, error) {
-	DBurl := fmt.Sprintf("postgres://0.0.0.0:5432/%s?sslmode=disable&user=%s&password=%s", DbDatabase, DbUser, DbPassword)
+	DBurl := fmt.Sprintf("postgres://postgres:postgres@bpk-pg:5432/%s?sslmode=disable", DbDatabase)
+	//DBurl := fmt.Sprintf("postgres://0.0.0.0:5432/%s?sslmode=disable&user=%s&password=%s", DbDatabase, DbUser, DbPassword)
 	return sqlx.Connect("postgres", DBurl)
 }
